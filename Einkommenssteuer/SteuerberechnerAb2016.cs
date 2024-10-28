@@ -13,18 +13,18 @@ public class SteuerberechnerAb2016 : ISteuerberecher {
         float z = GetZ(einkommen);
 
         // switch expression with pattern matching
-        return einkommen switch {
+        return MathF.Round(einkommen switch {
             <= GRUNDFREIBETRAG => 0f,
             <= STUFE_2 => (980.14f * y + 1400) * y,
             <= SUTFE_3 => (216.15f * z + 2397) * z + 965.58f,
             <= STUFE_4 => 0.42f * x - 8780.9f,
             _ => 0.45f * x - 16740.68f
-        };
+        }, 2);
     }
 
-    float GetY(float einkommen) => (float)Math.Floor(einkommen - GRUNDFREIBETRAG / 10000f);
+    float GetY(float einkommen) => (einkommen - GRUNDFREIBETRAG) / 10000f;
 
-    float GetX(float einkommen) => (float)Math.Floor(einkommen);
+    float GetX(float einkommen) => einkommen;
 
-    float GetZ(float einkommen) => (float)Math.Floor(einkommen - STUFE_2 / 10000f);
+    float GetZ(float einkommen) => (einkommen - STUFE_2) / 10000f;
 }
